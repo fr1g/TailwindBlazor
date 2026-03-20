@@ -23,23 +23,56 @@
             One package, one line of code.
         </p>
 
-        <!-- Install command -->
-        <div class="flex justify-center mb-6">
-            <div class="group relative flex items-center gap-3 px-5 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-violet-400/30 transition-colors cursor-pointer"
-                 @onclick="CopyInstallCommand">
-                <span class="text-gray-500 font-mono text-sm select-none">$</span>
-                <code class="font-mono text-sm sm:text-base text-gray-200 tracking-tight">dotnet add package TailwindBlazor</code>
-                <button class="ml-1 p-1 rounded-md text-gray-500 hover:text-violet-400 transition-colors" aria-label="Copy">
-                    @if (_copied)
-                    {
-                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                    }
-                    else
-                    {
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                    }
+        <!-- Install commands -->
+        <div class="flex justify-center mb-3">
+            <div class="inline-flex rounded-lg bg-white/[0.04] border border-white/[0.08] p-0.5">
+                <button class="@($"px-3 py-1.5 text-xs font-medium rounded-md transition-colors {(_showTemplate ? "bg-white/[0.08] text-white" : "text-gray-500 hover:text-gray-300")}")"
+                        @onclick="() => _showTemplate = true">
+                    New Project
+                </button>
+                <button class="@($"px-3 py-1.5 text-xs font-medium rounded-md transition-colors {(!_showTemplate ? "bg-white/[0.08] text-white" : "text-gray-500 hover:text-gray-300")}")"
+                        @onclick="() => _showTemplate = false">
+                    Existing Project
                 </button>
             </div>
+        </div>
+        <div class="flex justify-center mb-6">
+            @if (_showTemplate)
+            {
+                <div class="group relative flex items-center gap-3 px-5 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-violet-400/30 transition-colors cursor-pointer"
+                     @onclick="CopyTemplateCommand">
+                    <span class="text-gray-500 font-mono text-sm select-none">$</span>
+                    <code class="font-mono text-sm sm:text-base text-gray-200 tracking-tight">dotnet new blazor-tailwind -n MyApp</code>
+                    <button class="ml-1 p-1 rounded-md text-gray-500 hover:text-violet-400 transition-colors" aria-label="Copy">
+                        @if (_copiedTemplate)
+                        {
+                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        }
+                        else
+                        {
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        }
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="group relative flex items-center gap-3 px-5 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-violet-400/30 transition-colors cursor-pointer"
+                     @onclick="CopyInstallCommand">
+                    <span class="text-gray-500 font-mono text-sm select-none">$</span>
+                    <code class="font-mono text-sm sm:text-base text-gray-200 tracking-tight">dotnet add package TailwindBlazor</code>
+                    <button class="ml-1 p-1 rounded-md text-gray-500 hover:text-violet-400 transition-colors" aria-label="Copy">
+                        @if (_copied)
+                        {
+                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                        }
+                        else
+                        {
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        }
+                    </button>
+                </div>
+            }
         </div>
 
         <div class="flex justify-center gap-4">
@@ -60,7 +93,34 @@
 <section class="max-w-4xl xl:max-w-5xl mx-auto px-6 py-16 sm:py-20 lg:py-24">
     <div class="mb-12">
         <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-3">Quick Start</h2>
-        <p class="text-gray-400 text-lg">Three steps. Under a minute.</p>
+        <p class="text-gray-400 text-lg">Two ways to get started. Both under a minute.</p>
+    </div>
+
+    <!-- Template option -->
+    <div class="mb-12 p-6 rounded-2xl bg-violet-400/[0.04] border border-violet-400/[0.12]">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-violet-400 bg-violet-400/10 rounded-full">Recommended</span>
+            <h3 class="text-lg font-semibold">Project Template</h3>
+        </div>
+        <div class="space-y-3">
+            <div class="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+                <div class="flex items-center gap-2 px-4 py-2 border-b border-white/[0.04]">
+                    <span class="w-2 h-2 rounded-full bg-white/10"></span>
+                    <span class="w-2 h-2 rounded-full bg-white/10"></span>
+                    <span class="w-2 h-2 rounded-full bg-white/10"></span>
+                    <span class="ml-2 text-[11px] text-gray-500 font-mono">terminal</span>
+                </div>
+                <pre class="px-5 py-4 overflow-x-auto"><code class="font-mono text-sm"><span class="text-gray-500">$</span> <span class="text-gray-200">dotnet new install TailwindBlazor.Templates</span>
+<span class="text-gray-500">$</span> <span class="text-gray-200">dotnet new blazor-tailwind -n MyApp</span>
+<span class="text-gray-500">$</span> <span class="text-gray-200">cd MyApp && dotnet run</span></code></pre>
+            </div>
+            <p class="text-sm text-gray-400">Everything pre-configured — Tailwind CSS, entry point, stylesheet link, and <code class="font-mono text-xs text-violet-400/60 px-1 py-0.5 rounded bg-white/[0.04]">UseTailwind()</code>.</p>
+        </div>
+    </div>
+
+    <!-- Manual option -->
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold mb-6">Or add to an existing project</h3>
     </div>
 
     <div class="space-y-6">
@@ -242,6 +302,8 @@ builder.<span class="text-violet-400">UseTailwind</span>();</code></pre>
 
 @code {
     private bool _copied;
+    private bool _copiedTemplate;
+    private bool _showTemplate = true;
 
     private async Task CopyInstallCommand()
     {
@@ -250,6 +312,16 @@ builder.<span class="text-violet-400">UseTailwind</span>();</code></pre>
         StateHasChanged();
         await Task.Delay(2000);
         _copied = false;
+        StateHasChanged();
+    }
+
+    private async Task CopyTemplateCommand()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", "dotnet new install TailwindBlazor.Templates && dotnet new blazor-tailwind -n MyApp");
+        _copiedTemplate = true;
+        StateHasChanged();
+        await Task.Delay(2000);
+        _copiedTemplate = false;
         StateHasChanged();
     }
 
