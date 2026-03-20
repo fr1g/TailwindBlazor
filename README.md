@@ -21,6 +21,18 @@
 
 ## Quick Start
 
+### Option A: Project Template (recommended)
+
+```sh
+dotnet new install TailwindBlazor.Templates
+dotnet new blazor-tailwind -n MyApp
+cd MyApp && dotnet run
+```
+
+Everything is pre-configured — Tailwind CSS, the entry point, the stylesheet link, and `UseTailwind()`.
+
+### Option B: Add to an Existing Project
+
 ```sh
 dotnet add package TailwindBlazor
 ```
