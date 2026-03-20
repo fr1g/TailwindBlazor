@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="TailwindBlazor" Version="0.*" />
+<!--#if (UseWebAssembly) -->
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="ASPNET_VERSION" />
+<!--#endif -->
   </ItemGroup>
 
 </Project>

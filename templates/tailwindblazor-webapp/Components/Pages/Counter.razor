@@ -1,5 +1,11 @@
 @page "/counter"
+//#if (UseServer && UseWebAssembly)
+@rendermode InteractiveAuto
+//#elseif (UseServer)
 @rendermode InteractiveServer
+//#elseif (UseWebAssembly)
+@rendermode InteractiveWebAssembly
+//#endif
 
 <PageTitle>Counter</PageTitle>
 

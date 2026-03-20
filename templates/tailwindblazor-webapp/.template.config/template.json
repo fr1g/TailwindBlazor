@@ -35,6 +35,65 @@
       "defaultValue": "net9.0",
       "replaces": "net9.0"
     },
+    "interactivity": {
+      "type": "parameter",
+      "description": "The interactive render mode to use.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "server",
+          "description": "Interactive Server (SignalR)"
+        },
+        {
+          "choice": "webassembly",
+          "description": "Interactive WebAssembly"
+        },
+        {
+          "choice": "auto",
+          "description": "Interactive Auto (Server then WebAssembly)"
+        },
+        {
+          "choice": "none",
+          "description": "Static SSR only (no interactivity)"
+        }
+      ],
+      "defaultValue": "server"
+    },
+    "UseServer": {
+      "type": "computed",
+      "value": "(interactivity == \"server\" || interactivity == \"auto\")"
+    },
+    "UseWebAssembly": {
+      "type": "computed",
+      "value": "(interactivity == \"webassembly\" || interactivity == \"auto\")"
+    },
+    "HasInteractivity": {
+      "type": "computed",
+      "value": "(interactivity != \"none\")"
+    },
+    "aspnetVersion": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "ASPNET_VERSION",
+      "parameters": {
+        "evaluator": "C++",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "(Framework == \"net8.0\")",
+            "value": "8.*"
+          },
+          {
+            "condition": "(Framework == \"net9.0\")",
+            "value": "9.*"
+          },
+          {
+            "condition": "(Framework == \"net10.0\")",
+            "value": "10.*"
+          }
+        ]
+      }
+    },
     "skipRestore": {
       "type": "parameter",
       "datatype": "bool",
@@ -42,6 +101,33 @@
       "defaultValue": "false"
     }
   },
+  "specialCustomOperations": {
+    "**/*.razor": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "actionableIf": ["//#if"],
+            "actionableElse": ["//#else"],
+            "actionableElseif": ["//#elseif"],
+            "endif": ["//#endif"],
+            "trim": true,
+            "wholeLine": true
+          }
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!HasInteractivity)",
+          "exclude": ["Components/Pages/Counter.razor"]
+        }
+      ]
+    }
+  ],
   "primaryOutputs": [
     {
       "path": "TailwindBlazorApp.csproj"
