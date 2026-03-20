@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Luis Sena",
+  "classifications": ["Web", "Blazor", "Tailwind CSS"],
+  "identity": "TailwindBlazor.Templates.WebApp",
+  "name": "Blazor Web App with Tailwind CSS",
+  "shortName": "blazor-tailwind",
+  "description": "A Blazor Web App pre-configured with TailwindBlazor — zero-config Tailwind CSS v4 integration. No Node.js required.",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "TailwindBlazorApp",
+  "preferNameDirectory": true,
+  "defaultName": "BlazorTailwindApp",
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0",
+          "description": "Target .NET 8"
+        },
+        {
+          "choice": "net9.0",
+          "description": "Target .NET 9"
+        },
+        {
+          "choice": "net10.0",
+          "description": "Target .NET 10"
+        }
+      ],
+      "defaultValue": "net9.0",
+      "replaces": "net9.0"
+    },
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "TailwindBlazorApp.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "condition": "(!skipRestore)",
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet restore'"
+        }
+      ],
+      "continueOnError": true
+    }
+  ]
+}
