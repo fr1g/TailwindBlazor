@@ -8,4 +8,7 @@
   <Folder Name="/src/">
     <Project Path="src/TailwindBlazor/TailwindBlazor.csproj" />
   </Folder>
+  <Folder Name="/templates/">
+    <Project Path="templates/TailwindBlazor.Templates.csproj" />
+  </Folder>
 </Solution>
