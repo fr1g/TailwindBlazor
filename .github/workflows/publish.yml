@@ -10,13 +10,17 @@ jobs:
     permissions:
       contents: write
       packages: write
+    env:
+      VERSION: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - run: dotnet pack src/TailwindBlazor/TailwindBlazor.csproj -c Release -o ./artifacts
-      - run: dotnet pack templates/TailwindBlazor.Templates.csproj -c Release -o ./artifacts
+      - name: Extract version from tag
+        run: echo "PKG_VERSION=${VERSION#v}" >> $GITHUB_ENV
+      - run: dotnet pack src/TailwindBlazor/TailwindBlazor.csproj -c Release -o ./artifacts -p:Version=${{ env.PKG_VERSION }}
+      - run: dotnet pack templates/TailwindBlazor.Templates.csproj -c Release -o ./artifacts -p:Version=${{ env.PKG_VERSION }}
       - run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
       - run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/luissena/index.json --skip-duplicate
       - name: Create GitHub Release
